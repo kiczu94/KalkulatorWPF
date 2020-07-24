@@ -1,0 +1,17 @@
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\bin\Debug\netcoreapp3.1\Kalkulator.exe
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\bin\Debug\netcoreapp3.1\Kalkulator.deps.json
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\bin\Debug\netcoreapp3.1\Kalkulator.runtimeconfig.json
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\bin\Debug\netcoreapp3.1\Kalkulator.runtimeconfig.dev.json
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\bin\Debug\netcoreapp3.1\Kalkulator.dll
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\bin\Debug\netcoreapp3.1\Kalkulator.pdb
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator.csprojAssemblyReference.cache
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\MainWindow.g.cs
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\App.g.cs
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator_MarkupCompile.cache
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator_MarkupCompile.lref
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\MainWindow.baml
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator.g.resources
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator.AssemblyInfoInputs.cache
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator.AssemblyInfo.cs
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator.dll
+C:\Users\tkocz\source\repos\Kalkulator\Kalkulator\obj\Debug\netcoreapp3.1\Kalkulator.pdb
