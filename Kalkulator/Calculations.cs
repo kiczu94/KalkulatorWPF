@@ -44,13 +44,13 @@ namespace Kalkulator
         }
         public Calculations(string number1, string number2, string whatKindOfCalculation)
         {
-            Num1 = number1;
-            Num2 = number2;
+            Num1 = (number1 == null) ? "0" : number1;
+            Num2 =(number2==null)? "0": number2;
             whatCalc = whatKindOfCalculation;
         }
         public Calculations(string number1, string whatKindOfCalculation)
         {
-            Num1 = number1;
+            Num1 = (number1 == null) ? "0" : number1;
             whatCalc = whatKindOfCalculation;
         }
         public double CalculateValue()

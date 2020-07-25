@@ -22,7 +22,7 @@ namespace Kalkulator
     {
         public Display display { get; set; }
         public Display display2 { get; set; }
-        string text1, text2, text3;
+        string firstPartOfEquation, signOfCalculation, secondPartOfEquation, lastResult = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,66 +37,60 @@ namespace Kalkulator
 
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "1";
+            DisplayNumber("1");
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "2";
+            DisplayNumber("2");
         }
 
         private void Button3_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "3";
+            DisplayNumber("3");
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            text1 = display.Wyswietlacz;
-            text2 = "+";
-            display.Wyswietlacz = "+";
-            display2.Wyswietlacz = display.Wyswietlacz;
-            display.Wyswietlacz = null;
+            CheckIfCalcWasDone();
+            CreateEquation("+");
+            DeleteActualDisplay();
         }
         private void Button4_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "4";
+            DisplayNumber("4");
         }
         private void Button5_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "5";
+            DisplayNumber("5");
         }
         private void Button6_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "6";
+            DisplayNumber("6");
         }
         private void ButtonMinus_Click(object sender, RoutedEventArgs e)
         {
-            text1 = display.Wyswietlacz;
-            text2 = "-";
-            display.Wyswietlacz = "-";
-            display2.Wyswietlacz = display.Wyswietlacz;
-            display.Wyswietlacz = null;
+            CheckIfCalcWasDone();
+            CreateEquation("-");
+            DeleteActualDisplay();
         }
         private void Button7_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "7";
+            DisplayNumber("7");
         }
         private void Button8_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "8";
+            DisplayNumber("8");
         }
         private void Button9_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "9";
+            DisplayNumber("9");
         }
         private void ButtonStar_Click(object sender, RoutedEventArgs e)
         {
-            text1 = display.Wyswietlacz;
-            text2 = "*";
-            display.Wyswietlacz = "*";
-            display2.Wyswietlacz = display.Wyswietlacz;
-            display.Wyswietlacz = null;
+            CheckIfCalcWasDone();
+            CreateEquation("*");
+            DeleteActualDisplay();
         }
         private void ButtonDivide_Click(object sender, RoutedEventArgs e)
         {
@@ -104,24 +98,12 @@ namespace Kalkulator
         }
         private void Button0_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = "0";
+            DisplayNumber("0");
         }
 
         private void ButtonPlusMinus_Click(object sender, RoutedEventArgs e)
         {
-            string textHelper = display.Wyswietlacz;
-            if (display.Wyswietlacz.Contains('-'))
-            {
-                textHelper=textHelper.Replace('-', '\0');
-                display.Wyswietlacz = null;
-                display.Wyswietlacz = textHelper;
-            }
-            else
-            {
-                display.Wyswietlacz = null;
-                display.Wyswietlacz = "-" + textHelper;
-            }
-
+            ChangeSign();
         }
 
         private void ButtonComa_Click(object sender, RoutedEventArgs e)
@@ -131,14 +113,10 @@ namespace Kalkulator
 
         private void ButtonSqrt_Click(object sender, RoutedEventArgs e)
         {
-            display2.Wyswietlacz = null;
-            text1 = display.Wyswietlacz;
-            text2 = "sqrt";
-            display2.Wyswietlacz = "sqrt(" + display.Wyswietlacz + ")" + "=";
-            display.Wyswietlacz = null;
-            Calculations calc = new Calculations(text1, text2);
-            display.Wyswietlacz = calc.CalculateValue().ToString();
-            display2.Wyswietlacz = display.Wyswietlacz;
+            CheckIfCalcWasDone();
+            CreateEquation("sqrt");
+            DeleteActualDisplay();
+            PerformCalculation();
         }
 
         private void ButtonPower_Click(object sender, RoutedEventArgs e)
@@ -153,14 +131,12 @@ namespace Kalkulator
 
         private void ButtonDeleteOneNumber_Click(object sender, RoutedEventArgs e)
         {
-            string textHelper = display.Wyswietlacz.Remove((display.Wyswietlacz.Length) - 1);
-            display.Wyswietlacz = null;
-            display.Wyswietlacz = textHelper;
+            DeleteOneNumberFromMainDisplay();
         }
 
         private void ButtonDeleteActualDisplay_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = null;
+            DeleteActualDisplay();
         }
 
         private void ButtonRestOfDividing_Click(object sender, RoutedEventArgs e)
@@ -169,17 +145,112 @@ namespace Kalkulator
         }
         private void ButtonDeleteAll_Click(object sender, RoutedEventArgs e)
         {
-            display.Wyswietlacz = null;
-            display2.Wyswietlacz = null;
+            DeleteAbsolutelyAll();
         }
         private void ButtonResult_Click(object sender, RoutedEventArgs e)
         {
-            text3 = display.Wyswietlacz;
+            secondPartOfEquation = display.Wyswietlacz;
             display2.Wyswietlacz = display.Wyswietlacz + "=";
             display.Wyswietlacz = null;
-            Calculations calc = new Calculations(text1, text3, text2);
-            display.Wyswietlacz = calc.CalculateValue().ToString();
+            PerformCalculation();
+        }
+        //------------------------------------------------------------------------------------------------------------------------------------
+        private void DeleteAll()
+        {
+            DeleteActualDisplay();
+            DeleteHistoryDisplay();
+            firstPartOfEquation = null;
+            secondPartOfEquation = null;
+            signOfCalculation = null;
+        }
+        private void DeleteActualDisplay()
+        {
+            display.Wyswietlacz = null;
+        }
+        private void DeleteHistoryDisplay()
+        {
+            display2.Wyswietlacz = null;
+        }
+        private void DisplayNumber(string text)
+        {
+            display.Wyswietlacz = text;
+        }
+        private void CreateEquation(string text)
+        {
+            if (lastResult==null&&firstPartOfEquation==null)
+            {
+                firstPartOfEquation = display.Wyswietlacz;
+            }
+            else if (lastResult!=null)
+            {
+                firstPartOfEquation = lastResult;
+            }
+            signOfCalculation = text;
+            if (text != "sqrt")
+            {
+                display.Wyswietlacz = text;
+                display2.Wyswietlacz = display.Wyswietlacz;
+            }
+            else
+                display2.Wyswietlacz = "sqrt(" + display.Wyswietlacz + ")" + "=";
+        }
+        private void PerformCalculation()
+        {
+            Calculations calc = (signOfCalculation == "sqrt") ? new Calculations(firstPartOfEquation, signOfCalculation) : new Calculations(firstPartOfEquation, secondPartOfEquation, signOfCalculation);
+            lastResult = calc.CalculateValue().ToString();
+            display.Wyswietlacz = lastResult;
             display2.Wyswietlacz = display.Wyswietlacz;
+        }
+        private void DeleteOneNumberFromMainDisplay()
+        {
+            string textHelper = display.Wyswietlacz.Remove((display.Wyswietlacz.Length) - 1);
+            DeleteActualDisplay();
+            display.Wyswietlacz = textHelper;
+        }
+        private void ChangeSign()
+        {
+            string textHelper = display.Wyswietlacz;
+            if (textHelper!=null)
+            {
+                if (display.Wyswietlacz.Contains('-'))
+                {
+                    textHelper = textHelper.Replace('-', '\0');
+                    DeleteActualDisplay();
+                    display.Wyswietlacz = textHelper;
+                }
+                else
+                {
+                    DeleteActualDisplay();
+                    display.Wyswietlacz = "-" + textHelper;
+                }
+            }
+        }
+        private void CheckIfCalcWasDone()
+        {
+            if (lastResult != null&&signOfCalculation!=null)
+            {
+                if (!display2.Wyswietlacz.Contains('='))
+                {
+                    secondPartOfEquation = display.Wyswietlacz;
+                    CreateEquation(signOfCalculation);
+                    PerformCalculation();
+                }
+                DeleteAll();
+                display2.Wyswietlacz = lastResult;
+            }
+            else if (lastResult==null&&signOfCalculation!=null)
+            {
+                secondPartOfEquation = display.Wyswietlacz;
+                CreateEquation(signOfCalculation);
+                PerformCalculation();
+                DeleteAll();
+                display2.Wyswietlacz = lastResult;
+            }
+        }
+        private void DeleteAbsolutelyAll()
+        {
+            DeleteAll();
+            lastResult = null;
         }
     }
 }

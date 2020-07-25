@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tkocz\\source\\repos\\Kalkulator\\Kalkulator\\Kalkulator.csproj": {}
+    "C:\\Users\\tkocz\\Desktop\\KalkulatorWPF\\Kalkulator\\Kalkulator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tkocz\\source\\repos\\Kalkulator\\Kalkulator\\Kalkulator.csproj": {
+    "C:\\Users\\tkocz\\Desktop\\KalkulatorWPF\\Kalkulator\\Kalkulator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tkocz\\source\\repos\\Kalkulator\\Kalkulator\\Kalkulator.csproj",
+        "projectUniqueName": "C:\\Users\\tkocz\\Desktop\\KalkulatorWPF\\Kalkulator\\Kalkulator.csproj",
         "projectName": "Kalkulator",
-        "projectPath": "C:\\Users\\tkocz\\source\\repos\\Kalkulator\\Kalkulator\\Kalkulator.csproj",
+        "projectPath": "C:\\Users\\tkocz\\Desktop\\KalkulatorWPF\\Kalkulator\\Kalkulator.csproj",
         "packagesPath": "C:\\Users\\tkocz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tkocz\\source\\repos\\Kalkulator\\Kalkulator\\obj\\",
+        "outputPath": "C:\\Users\\tkocz\\Desktop\\KalkulatorWPF\\Kalkulator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tkocz\\AppData\\Roaming\\NuGet\\NuGet.Config",
