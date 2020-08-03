@@ -69,6 +69,9 @@ namespace Kalkulator
                 case "sqrt":
                     result = Math.Sqrt(num1);
                     break;
+                case "*-1":
+                    result =num1 * (-1);
+                    break;
             }
             return result;
         }

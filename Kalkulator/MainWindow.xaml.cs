@@ -177,57 +177,71 @@ namespace Kalkulator
         }
         private void CreateEquation(string text)
         {
-            if (lastResult==null&&firstPartOfEquation==null)
+            signOfCalculation = text;
+            if (lastResult == null && firstPartOfEquation == null)
             {
                 firstPartOfEquation = display.Wyswietlacz;
             }
-            else if (lastResult!=null)
+            else if (lastResult != null && signOfCalculation != "*-1")
             {
                 firstPartOfEquation = lastResult;
             }
-            signOfCalculation = text;
-            if (text != "sqrt")
+            if (signOfCalculation == "sqrt")
+            {
+                display2.Wyswietlacz = "sqrt(" + display.Wyswietlacz + ")" + "=";
+            }
+            else
             {
                 display.Wyswietlacz = text;
                 display2.Wyswietlacz = display.Wyswietlacz;
             }
-            else
-                display2.Wyswietlacz = "sqrt(" + display.Wyswietlacz + ")" + "=";
         }
         private void PerformCalculation()
         {
-            Calculations calc = (signOfCalculation == "sqrt") ? new Calculations(firstPartOfEquation, signOfCalculation) : new Calculations(firstPartOfEquation, secondPartOfEquation, signOfCalculation);
+            Calculations calc;
+            if (signOfCalculation == "sqrt")
+            {
+                calc = new Calculations(firstPartOfEquation, signOfCalculation);
+            }
+            else
+            {
+                calc = new Calculations(firstPartOfEquation, secondPartOfEquation, signOfCalculation);
+            }
             lastResult = calc.CalculateValue().ToString();
             display.Wyswietlacz = lastResult;
             display2.Wyswietlacz = display.Wyswietlacz;
         }
         private void DeleteOneNumberFromMainDisplay()
         {
-            string textHelper = display.Wyswietlacz.Remove((display.Wyswietlacz.Length) - 1);
-            DeleteActualDisplay();
-            display.Wyswietlacz = textHelper;
+            if (display.Wyswietlacz != null)
+            {
+                string textHelper = display.Wyswietlacz.Remove((display.Wyswietlacz.Length) - 1);
+                DeleteActualDisplay();
+                display.Wyswietlacz = textHelper;
+            }
         }
         private void ChangeSign()
         {
             string textHelper = display.Wyswietlacz;
-            if (textHelper!=null)
+            if (textHelper == null)
             {
-                if (display.Wyswietlacz.Contains('-'))
-                {
-                    textHelper = textHelper.Replace('-', '\0');
-                    DeleteActualDisplay();
-                    display.Wyswietlacz = textHelper;
-                }
-                else
-                {
-                    DeleteActualDisplay();
-                    display.Wyswietlacz = "-" + textHelper;
-                }
+                display.Wyswietlacz = "-";
+            }
+            else if (textHelper == "-")
+            {
+                display.Wyswietlacz = null;
+            }
+            else
+            {
+                Calculations calc = new Calculations(display.Wyswietlacz, "*-1");
+                lastResult = calc.CalculateValue().ToString();
+                DeleteActualDisplay();
+                display.Wyswietlacz = lastResult;
             }
         }
         private void CheckIfCalcWasDone()
         {
-            if (lastResult != null&&signOfCalculation!=null)
+            if (lastResult != null && signOfCalculation != null)
             {
                 if (!display2.Wyswietlacz.Contains('='))
                 {
@@ -238,7 +252,7 @@ namespace Kalkulator
                 DeleteAll();
                 display2.Wyswietlacz = lastResult;
             }
-            else if (lastResult==null&&signOfCalculation!=null)
+            else if (lastResult == null && signOfCalculation != null)
             {
                 secondPartOfEquation = display.Wyswietlacz;
                 CreateEquation(signOfCalculation);
