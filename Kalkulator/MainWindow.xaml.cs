@@ -108,7 +108,7 @@ namespace Kalkulator
 
         private void ButtonComa_Click(object sender, RoutedEventArgs e)
         {
-
+            Coma();
         }
 
         private void ButtonSqrt_Click(object sender, RoutedEventArgs e)
@@ -222,12 +222,11 @@ namespace Kalkulator
         }
         private void ChangeSign()
         {
-            string textHelper = display.Wyswietlacz;
-            if (textHelper == null)
+            if (display.Wyswietlacz == null)
             {
                 display.Wyswietlacz = "-";
             }
-            else if (textHelper == "-")
+            else if (display.Wyswietlacz == "-")
             {
                 display.Wyswietlacz = null;
             }
@@ -265,6 +264,21 @@ namespace Kalkulator
         {
             DeleteAll();
             lastResult = null;
+        }
+        private void Coma()
+        {
+            if (display.Wyswietlacz == null)
+            {
+                display.Wyswietlacz = "0,";
+            }
+            else if (display.Wyswietlacz == "0,")
+            {
+                display.Wyswietlacz = null;
+            }
+            else if (!display.Wyswietlacz.Contains(","))
+            {
+                display.Wyswietlacz = ",";
+            }
         }
     }
 }

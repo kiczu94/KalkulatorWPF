@@ -73,7 +73,7 @@ namespace Kalkulator
                     result =num1 * (-1);
                     break;
             }
-            return result;
+            return Math.Round(result,7);
         }
     }
 }
