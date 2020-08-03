@@ -94,7 +94,9 @@ namespace Kalkulator
         }
         private void ButtonDivide_Click(object sender, RoutedEventArgs e)
         {
-
+            CheckIfCalcWasDone();
+            CreateEquation("/");
+            DeleteActualDisplay();
         }
         private void Button0_Click(object sender, RoutedEventArgs e)
         {
@@ -121,7 +123,10 @@ namespace Kalkulator
 
         private void ButtonPower_Click(object sender, RoutedEventArgs e)
         {
-
+            CheckIfCalcWasDone();
+            CreateEquation("^2");
+            DeleteActualDisplay();
+            PerformCalculation();
         }
 
         private void ButtonOneOver_Click(object sender, RoutedEventArgs e)
@@ -141,7 +146,9 @@ namespace Kalkulator
 
         private void ButtonRestOfDividing_Click(object sender, RoutedEventArgs e)
         {
-
+            CheckIfCalcWasDone();
+            CreateEquation("%");
+            DeleteActualDisplay();
         }
         private void ButtonDeleteAll_Click(object sender, RoutedEventArgs e)
         {
@@ -149,10 +156,7 @@ namespace Kalkulator
         }
         private void ButtonResult_Click(object sender, RoutedEventArgs e)
         {
-            secondPartOfEquation = display.Wyswietlacz;
-            display2.Wyswietlacz = display.Wyswietlacz + "=";
-            display.Wyswietlacz = null;
-            PerformCalculation();
+            Result();
         }
         //------------------------------------------------------------------------------------------------------------------------------------
         private void DeleteAll()
@@ -190,6 +194,10 @@ namespace Kalkulator
             {
                 display2.Wyswietlacz = "sqrt(" + display.Wyswietlacz + ")" + "=";
             }
+            else if (signOfCalculation== "^2")
+            {
+                display2.Wyswietlacz = display.Wyswietlacz + "^2 = ";
+            }
             else
             {
                 display.Wyswietlacz = text;
@@ -199,7 +207,7 @@ namespace Kalkulator
         private void PerformCalculation()
         {
             Calculations calc;
-            if (signOfCalculation == "sqrt")
+            if (signOfCalculation == "sqrt"||signOfCalculation=="^2")
             {
                 calc = new Calculations(firstPartOfEquation, signOfCalculation);
             }
@@ -280,5 +288,23 @@ namespace Kalkulator
                 display.Wyswietlacz = ",";
             }
         }
+        private void Result()
+        {
+            secondPartOfEquation = display.Wyswietlacz;
+            if (secondPartOfEquation == "0" && signOfCalculation == "/")
+            {
+                display.Wyswietlacz = null;
+                display.Wyswietlacz = "Nie można dzielić przez zero";
+                DeleteHistoryDisplay();
+            }
+            else
+            {
+                display2.Wyswietlacz = display.Wyswietlacz + "=";
+                display.Wyswietlacz = null;
+                PerformCalculation();
+            }
+
+        }
+
     }
 }

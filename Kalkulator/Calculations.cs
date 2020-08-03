@@ -72,6 +72,18 @@ namespace Kalkulator
                 case "*-1":
                     result =num1 * (-1);
                     break;
+                case "%":
+                    result = num1 % num2;
+                    break;
+                case "/":
+                    if (num2!=0)
+                    {
+                        result = num1 / num2;
+                    }
+                    break;
+                case "^2":
+                    result = Math.Pow(num1, 2);
+                    break;
             }
             return Math.Round(result,7);
         }
