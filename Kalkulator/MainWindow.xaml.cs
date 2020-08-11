@@ -23,6 +23,7 @@ namespace Kalkulator
         public Display display { get; set; }
         public Display display2 { get; set; }
         string firstPartOfEquation, signOfCalculation, secondPartOfEquation, lastResult = null;
+        bool wasClickedAlready = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -156,6 +157,7 @@ namespace Kalkulator
         }
         private void ButtonResult_Click(object sender, RoutedEventArgs e)
         {
+            ResultClickedAgain();
             Result();
         }
         //------------------------------------------------------------------------------------------------------------------------------------
@@ -166,6 +168,7 @@ namespace Kalkulator
             firstPartOfEquation = null;
             secondPartOfEquation = null;
             signOfCalculation = null;
+            wasClickedAlready = false;
         }
         private void DeleteActualDisplay()
         {
@@ -194,7 +197,7 @@ namespace Kalkulator
             {
                 display2.Wyswietlacz = "sqrt(" + display.Wyswietlacz + ")" + "=";
             }
-            else if (signOfCalculation== "^2")
+            else if (signOfCalculation == "^2")
             {
                 display2.Wyswietlacz = display.Wyswietlacz + "^2 = ";
             }
@@ -207,7 +210,7 @@ namespace Kalkulator
         private void PerformCalculation()
         {
             Calculations calc;
-            if (signOfCalculation == "sqrt"||signOfCalculation=="^2")
+            if (signOfCalculation == "sqrt" || signOfCalculation == "^2")
             {
                 calc = new Calculations(firstPartOfEquation, signOfCalculation);
             }
@@ -248,24 +251,31 @@ namespace Kalkulator
         }
         private void CheckIfCalcWasDone()
         {
-            if (lastResult != null && signOfCalculation != null)
+            if (signOfCalculation != "sqrt")
             {
-                if (!display2.Wyswietlacz.Contains('='))
+                if (lastResult != null && signOfCalculation != null)
+                {
+                    if (!display2.Wyswietlacz.Contains('='))
+                    {
+                        secondPartOfEquation = display.Wyswietlacz;
+                        CreateEquation(signOfCalculation);
+                        PerformCalculation();
+                    }
+                    DeleteAll();
+                    display2.Wyswietlacz = lastResult;
+                }
+                else if (lastResult == null && signOfCalculation != null)
                 {
                     secondPartOfEquation = display.Wyswietlacz;
                     CreateEquation(signOfCalculation);
                     PerformCalculation();
+                    DeleteAll();
+                    display2.Wyswietlacz = lastResult;
                 }
-                DeleteAll();
-                display2.Wyswietlacz = lastResult;
             }
-            else if (lastResult == null && signOfCalculation != null)
+            else
             {
-                secondPartOfEquation = display.Wyswietlacz;
-                CreateEquation(signOfCalculation);
-                PerformCalculation();
-                DeleteAll();
-                display2.Wyswietlacz = lastResult;
+                display2.Wyswietlacz = null;
             }
         }
         private void DeleteAbsolutelyAll()
@@ -290,18 +300,70 @@ namespace Kalkulator
         }
         private void Result()
         {
-            secondPartOfEquation = display.Wyswietlacz;
-            if (secondPartOfEquation == "0" && signOfCalculation == "/")
+            if (wasClickedAlready == true)
             {
-                display.Wyswietlacz = null;
-                display.Wyswietlacz = "Nie można dzielić przez zero";
-                DeleteHistoryDisplay();
+                if (signOfCalculation != "-" && signOfCalculation != "/")
+                {
+                    secondPartOfEquation = display.Wyswietlacz;
+                    display2.Wyswietlacz = secondPartOfEquation + signOfCalculation + firstPartOfEquation + "=";
+                    display.Wyswietlacz = null;
+                    PerformCalculation();
+                }
+                else if (signOfCalculation == "-" || signOfCalculation == "/")
+                {
+                    display2.Wyswietlacz = firstPartOfEquation + signOfCalculation + secondPartOfEquation + "=";
+                    display.Wyswietlacz = null;
+                    PerformCalculation();
+                }
             }
             else
             {
-                display2.Wyswietlacz = display.Wyswietlacz + "=";
-                display.Wyswietlacz = null;
-                PerformCalculation();
+                secondPartOfEquation = display.Wyswietlacz;
+                if (secondPartOfEquation == "0" && signOfCalculation == "/")
+                {
+                    display.Wyswietlacz = null;
+                    display.Wyswietlacz = "Nie można dzielić przez zero";
+                    DeleteHistoryDisplay();
+                }
+                else
+                {
+                    display2.Wyswietlacz = display.Wyswietlacz + "=";
+                    display.Wyswietlacz = null;
+                    PerformCalculation();
+                }
+            }
+        }
+        private void ResultClickedAgain()
+        {
+            if (lastResult != null)
+            {
+                if (wasClickedAlready==false)
+                {
+                    if (signOfCalculation != "-" && signOfCalculation != "/")
+                    {
+                        firstPartOfEquation = secondPartOfEquation;
+                        display2.Wyswietlacz = null;
+                        wasClickedAlready = true;
+                    }
+                    else
+                    {
+                        firstPartOfEquation = lastResult;
+                        display2.Wyswietlacz = null;
+                        wasClickedAlready = true;
+                    }
+                }
+                else
+                {
+                    if (signOfCalculation == "-" || signOfCalculation == "/")
+                    {
+                        firstPartOfEquation = lastResult;
+                        display2.Wyswietlacz = null; 
+                    }
+                    else
+                    {
+                        display2.Wyswietlacz = null;
+                    }
+                }
             }
 
         }
